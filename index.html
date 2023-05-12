@@ -4,11 +4,18 @@
     <meta charset="utf-8">
     <title>Just Voca</title>
     <script src="script.js"></script>
+    <script src="firebase.js"></script>
   </head>
   <body>
     <h1>수민이를 위한 단어장 페이지! </h1>
     <div>
+        <input type="text" id="wordInput" placeholder="단어 스펠링">
+        <input type="text" id="meaningInput" placeholder="단어 뜻">
         <button onclick="appendVoca()"> 단어 추가하기</button>
+    </div>
+
+    <div>
+        <ul id="dataList"></ul>
     </div>
     
     <div>
