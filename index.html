@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Just Voca</title>
     <script src="script.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.0/dist/xlsx.full.min.js"></script>
   </head>
   <body>
     <h1>수민이를 위한 단어장 페이지! </h1>
@@ -16,7 +16,11 @@
         <button onclick="removeAllVoca()"> 모두 지우기 </button>
 
     </div>
-
+    <!-- 엑셀 파일 업로드 받는 부분-->
+    <div>
+      <input type="file" id="fileInput">
+      <div id="output"></div>
+    </div>
     <div>
         <ul id="dataList"></ul>
     </div>
