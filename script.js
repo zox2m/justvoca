@@ -8,7 +8,7 @@ function setVoca(){
   const key = document.getElementById('wordInput').value;
   const data = document.getElementById('meaningInput').value;
   localStorage.setItem(key, data);
-  alert("입력 성공 "); // 출력: apple
+  //alert("입력 성공 "); // 출력: apple
 }
 
 
