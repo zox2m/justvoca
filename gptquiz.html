@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vocabulary Quiz</title>
+    <style>
+      .quiz-container {
+        text-align: center;
+        padding: 20px;
+      }
+
+      .quiz-question {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .quiz-option {
+        margin-bottom: 10px;
+      }
+    </style>
+    <script src="gptquiz.js"></script>
+  </head>
+  <body>
+    <button onclick="startQuiz()">Start Quiz</button>
+    <div id="quizContainer" class="quiz-container"></div>
+  </body>
+</html>
+ 

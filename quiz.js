@@ -6,71 +6,31 @@ function getRandomIndex(max) {
 }
 
 function startQuiz() {
-    // Get all keys from local storage
     const keys = Object.keys(localStorage);
 
-    //단어장이 비었다면
     if (keys.length === 0) {
-        console.log('No vocabulary data found.');
-        return;
+      console.log('No vocabulary data found.');
+      return;
     }
 
     quizData = [];
+
+    keys.forEach((key) => {
+      const value = localStorage.getItem(key);
+      quizData.push({ key, value });
+    });
+
+    shuffleArray(quizData);
+    presentNextQuestion();
     
-    // Select a random key
-    const randomIndex = getRandomIndex(keys.length);
-    const randomKey = keys[randomIndex];
+  }
 
-    // Get the value (meaning) for the random key
-    const randomValue = localStorage.getItem(randomKey);
-
-    // Create an array of 4 possible meanings (including the correct one)
-    const meanings = [randomValue];
-
-    while (meanings.length < 4) {
-        const randomMeaning = localStorage.getItem(keys[getRandomIndex(keys.length)]);
-
-        if (!meanings.includes(randomMeaning)) {
-        meanings.push(randomMeaning);
-        }
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
-
-    // Shuffle the meanings array
-    meanings.sort(() => Math.random() - 0.5);
-
-     // Clear previous quiz elements
-     const quizContainer = document.getElementById('quizContainer');
-     //quizContainer.style.color = 'black';
-     quizContainer.innerHTML = '';
-
-     // Display the quiz question
-     const questionElement = document.createElement('h2');
-     questionElement.textContent = randomKey;
-     quizContainer.appendChild(questionElement);
-
-     // Create and display answer options
-     meanings.forEach((meaning) => {
-        const optionElement = document.createElement('button');
-        optionElement.textContent = meaning;
-        optionElement.addEventListener('click', () => handleAnswer(optionElement, randomValue));
-        quizContainer.appendChild(optionElement);
-      });
-    
-}
-
-function handleAnswer(optionElement, correctAnswer) {
-    const quizContainer = document.getElementById('quizContainer');
-
-    if (optionElement.textContent === correctAnswer) {
-      quizContainer.textContent = 'Correct!';
-      quizContainer.style.color = 'green';
-    } else {
-      quizContainer.textContent = 'Incorrect!';
-      quizContainer.style.color = 'red';
-    }
-}
-
-
+  }
 
 //다음 문제 표시 함수
 function presentNextQuestion() {
@@ -109,8 +69,6 @@ function presentNextQuestion() {
     optionElement.addEventListener('click', () => showAnswer(currentQuiz.value));
     quizContainer.appendChild(optionElement);
   }
-
-
 
 
 //정답 공개 함수
