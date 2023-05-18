@@ -116,18 +116,55 @@ function displayResults() {
     createResult();
 }
 
-function createResult(){
-    // 테이블로 정리하려고 함!! 
+function createResult() {
     const tableElement = document.createElement('table');
-    const tableHeaderElement = document.createElement('th');
-    tableElement.append(tableHeaderElement.append('스펠링'));
-    tableElement.append(tableHeaderElement.append('정답'));
-    tableElement.append(tableHeaderElement.append('내가 고른 답'));
-
-    answers.forEach((answer, index) => {
-        const resultElement = document.createElement('p');
-        resultElement.textContent = `${index + 1}: Spelling: ${answer.question}, Your Answer: ${answer.selectedAnswer}, Correct Answer: ${answer.correctAnswer}`;
-        quizContainer.appendChild(resultElement);
-    
+  
+    // 테이블 헤더 생성
+    const theadElement = document.createElement('thead');
+    const tableHeaderRow = document.createElement('tr');
+    const headerCells = ['스펠링', '정답', '내가 고른 답'];
+  
+    headerCells.forEach((headerText) => {
+      const tableHeaderCell = document.createElement('th');
+      tableHeaderCell.textContent = headerText;
+      tableHeaderRow.appendChild(tableHeaderCell);
     });
-}
+  
+    theadElement.appendChild(tableHeaderRow);
+    tableElement.appendChild(theadElement);
+  
+    // 테이블 본문 생성
+    const tbodyElement = document.createElement('tbody');
+    
+    answers.forEach((answer, index) => {
+      const tableRow = document.createElement('tr');
+      
+      const spellingCell = document.createElement('td');
+      spellingCell.textContent = answer.question;
+      tableRow.appendChild(spellingCell);
+      
+      const correctAnswerCell = document.createElement('td');
+      correctAnswerCell.textContent = answer.correctAnswer;
+      tableRow.appendChild(correctAnswerCell);
+      
+      const selectedAnswerCell = document.createElement('td');
+      selectedAnswerCell.textContent = answer.selectedAnswer;
+      tableRow.appendChild(selectedAnswerCell);
+      
+      if (answer.correctAnswer === answer.selectAnswer) {
+        selectedAnswerCell.style.color = 'green';
+      } else{
+        selectedAnswerCell.style.color = 'red';
+      }
+      
+      tbodyElement.appendChild(tableRow);
+    });
+  
+    tableElement.appendChild(tbodyElement);
+  
+    // 결과를 출력할 컨테이너에 테이블 추가
+    const resultContainer = document.getElementById('resultContainer');
+    resultContainer.innerHTML = '';
+    resultContainer.appendChild(tableElement);
+  }
+  
