@@ -1,6 +1,6 @@
 //퀴즈 페이지로 넘어간다
 function vocaQuiz(){
-    window.location.href = "quiz.html";
+    window.location.href = "gptquiz.html";
 }
 
 // 데이터 입력

@@ -4,22 +4,38 @@ let currentQuestion = 0;
 let answers = [];
 
 function startQuiz() {
-const keys = Object.keys(localStorage);
+    const quizContainer = document.getElementById('quizContainer');
+    const keys = Object.keys(localStorage);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const question = randomKey;
+    const correctAnswer = localStorage.getItem(randomKey);
 
-if (keys.length === 0) {
-    console.log('No vocabulary data found.');
-    return;
-}
+    const options = [correctAnswer];
+    const values = Object.values(localStorage);
 
-quizData = [];
 
-keys.forEach((key) => {
-    const value = localStorage.getItem(key);
-    quizData.push({ key, value });
-});
+    while (options.length < 4) {
+        const randomValue = values[Math.floor(Math.random() * values.length)];
+        if (!options.includes(randomValue)) {
+            options.push(randomValue);
+        }
+    }
+    options.sort(() => Math.random() - 0.5);
+    
+    if (keys.length === 0) {
+        console.log('No vocabulary data found.');
+        return;
+    }
+    
+    quizData = [];
 
-shuffleArray(quizData);
-presentNextQuestion();
+    keys.forEach((key) => {
+        const value = localStorage.getItem(key);
+        quizData.push({ key, value });
+    });
+
+    shuffleArray(quizData);
+    presentNextQuestion();
 }
 
 function shuffleArray(array) {
@@ -93,17 +109,25 @@ presentNextQuestion();
 }
 
 function displayResults() {
-const quizContainer = document.getElementById('quizContainer');
+    const quizContainer = document.getElementById('quizContainer');
 
-// Clear current question
-quizContainer.innerHTML = '';
+    // Clear current question
+    quizContainer.innerHTML = '';
+    createResult();
+}
 
-answers.forEach((answer, index) => {
-    const resultElement = document.createElement('p');
-    resultElement.textContent = `Question ${index + 1}: 
-                                Spelling: ${answer.question}, 
-                                Your Answer: ${answer.selectedAnswer}, 
-                                Correct Answer: ${answer.correctAnswer}`;
-    quizContainer.appendChild(resultElement);
-});
+function createResult(){
+    // 테이블로 정리하려고 함!! 
+    const tableElement = document.createElement('table');
+    const tableHeaderElement = document.createElement('th');
+    tableElement.append(tableHeaderElement.append('스펠링'));
+    tableElement.append(tableHeaderElement.append('정답'));
+    tableElement.append(tableHeaderElement.append('내가 고른 답'));
+
+    answers.forEach((answer, index) => {
+        const resultElement = document.createElement('p');
+        resultElement.textContent = `${index + 1}: Spelling: ${answer.question}, Your Answer: ${answer.selectedAnswer}, Correct Answer: ${answer.correctAnswer}`;
+        quizContainer.appendChild(resultElement);
+    
+    });
 }
