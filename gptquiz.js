@@ -122,7 +122,7 @@ function createResult() {
     // 테이블 헤더 생성
     const theadElement = document.createElement('thead');
     const tableHeaderRow = document.createElement('tr');
-    const headerCells = ['스펠링', '정답', '내가 고른 답'];
+    const headerCells = ['스펠링', '정답', '내가 고른 답','정오'];
   
     headerCells.forEach((headerText) => {
       const tableHeaderCell = document.createElement('th');
@@ -150,12 +150,16 @@ function createResult() {
       const selectedAnswerCell = document.createElement('td');
       selectedAnswerCell.textContent = answer.selectedAnswer;
       tableRow.appendChild(selectedAnswerCell);
-      
-      if (answer.correctAnswer === answer.selectAnswer) {
-        selectedAnswerCell.style.color = 'green';
+    
+      const resultCell = document.createElement('td');
+      if (answer.correctAnswer == answer.selectAnswer) {
+        resultCell.textContent = 'O';
+        resultCell.style.color = 'green';
       } else{
-        selectedAnswerCell.style.color = 'red';
-      }
+        resultCell.textContent = 'X';
+        resultCell.style.color = 'red';
+      }      
+      tableRow.appendChild(resultCell);
       
       tbodyElement.appendChild(tableRow);
     });
@@ -167,4 +171,3 @@ function createResult() {
     resultContainer.innerHTML = '';
     resultContainer.appendChild(tableElement);
   }
-  
